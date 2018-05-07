@@ -9,13 +9,19 @@ class Chip8
 {
 private:
 	// Emulator-specific data
-	enum class EmulatorState {
-		Stopped,
-		AwaitingInput,
-		Running
+	enum EmulatorFlags {
+		Stopped = 0,
+		Running = 0x1,
+		AwaitingInput = 0x2,
 	} state;
-	float fTimerAccum; // Timer 
+	float fTimerAccum; // Timer
+	bool bDisplayStale{ true };
+	unsigned char arrBDisplayStale[64][32];
+	unsigned char input; // Keyboard input bitmask. Higher numbers are stored further left.
 	static const unsigned char glpyhs[80];
+	bool CheckIPointerIsValid(); // Prevent out-of-bounds memory access.
+	std::string opcodehex; // easier debugging
+	unsigned char opcodenibs[4]; // inspect individual nybbles easier
 
 	// Memory and registers
 	unsigned char ram[4096]; // 4k memory
@@ -39,7 +45,6 @@ private:
 	void LDC(); // load constant
 	void ADDC(); // add constant
 	void LD(); // load register
-	void ADD(); // add register
 	void OR(); // or regsisters
 	void AND(); // and
 	void XOR();
@@ -53,7 +58,7 @@ private:
 	void RND(); // random
 	void DRW(); // draw sprite
 	void SKP(); // skip if key down
-	void SKNP(); // skip if not down
+	void SKPN(); // skip if not down
 	void LDT(); // load delay timer into register
 	void LDK(); // wait for keypress and store that
 	void TIM(); // set delay timer
@@ -65,15 +70,31 @@ private:
 	void LDS(); // read registers from ram
 
 	// Graphics
-	unsigned char display[8][32]; // 32 rows of 8 bytes; 64x32 one-bit pixels
+	unsigned char display[64][32]; // 64x32 one-bit pixels
 
 public:
 	void LoadRom(const std::string &path);
 	void Cycle(const float dTime);
 
+	const inline bool IsRunning() {
+		return state & 1;
+	}
 	const inline bool IsSoundOn() {
 		return timerSnd > 0;
 	};
+	inline bool GetPixel(size_t x, size_t y) {
+		bDisplayStale = false;
+		arrBDisplayStale[x][y] = false;
+		return display[x][y] != 0;
+	};
+	const inline bool IsDisplayStale() {
+		return bDisplayStale;
+	}
+	const inline bool IsPixelStale(size_t x, size_t y) {
+		return arrBDisplayStale[x][y];
+	}
+
+	void SetInput(const unsigned char number, const bool keydown);
 
 	Chip8();
 	~Chip8();
