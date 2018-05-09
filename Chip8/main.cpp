@@ -8,25 +8,25 @@ Chip8 emulator;
 
 void UpdateInput()
 {
-	emulator.SetInput(1, (GetAsyncKeyState('1') & 0x8000) != 0);
-	emulator.SetInput(2, (GetAsyncKeyState('2') & 0x8000) != 0);
-	emulator.SetInput(3, (GetAsyncKeyState('3') & 0x8000) != 0);
-	emulator.SetInput(4, (GetAsyncKeyState('4') & 0x8000) != 0);
+	emulator.SetInput(0x1, (GetAsyncKeyState('1') & 0x8000) != 0);
+	emulator.SetInput(0x2, (GetAsyncKeyState('2') & 0x8000) != 0);
+	emulator.SetInput(0x3, (GetAsyncKeyState('3') & 0x8000) != 0);
+	emulator.SetInput(0xC, (GetAsyncKeyState('4') & 0x8000) != 0);
 
-	emulator.SetInput(5, (GetAsyncKeyState('Q') & 0x8000) != 0);
-	emulator.SetInput(6, (GetAsyncKeyState('W') & 0x8000) != 0);
-	emulator.SetInput(7, (GetAsyncKeyState('E') & 0x8000) != 0);
-	emulator.SetInput(8, (GetAsyncKeyState('R') & 0x8000) != 0);
+	emulator.SetInput(0x4, (GetAsyncKeyState('Q') & 0x8000) != 0);
+	emulator.SetInput(0x5, (GetAsyncKeyState('W') & 0x8000) != 0);
+	emulator.SetInput(0x6, (GetAsyncKeyState('E') & 0x8000) != 0);
+	emulator.SetInput(0xD, (GetAsyncKeyState('R') & 0x8000) != 0);
 
-	emulator.SetInput(9, (GetAsyncKeyState('A') & 0x8000) != 0);
-	emulator.SetInput(10, (GetAsyncKeyState('S') & 0x8000) != 0);
-	emulator.SetInput(11, (GetAsyncKeyState('D') & 0x8000) != 0);
-	emulator.SetInput(12, (GetAsyncKeyState('F') & 0x8000) != 0);
+	emulator.SetInput(0x7, (GetAsyncKeyState('A') & 0x8000) != 0);
+	emulator.SetInput(0x8, (GetAsyncKeyState('S') & 0x8000) != 0);
+	emulator.SetInput(0x9, (GetAsyncKeyState('D') & 0x8000) != 0);
+	emulator.SetInput(0xE, (GetAsyncKeyState('F') & 0x8000) != 0);
 
-	emulator.SetInput(13, (GetAsyncKeyState('Z') & 0x8000) != 0);
+	emulator.SetInput(0xA, (GetAsyncKeyState('Z') & 0x8000) != 0);
 	emulator.SetInput(0,  (GetAsyncKeyState('X') & 0x8000) != 0);
-	emulator.SetInput(14, (GetAsyncKeyState('C') & 0x8000) != 0);
-	emulator.SetInput(15, (GetAsyncKeyState('V') & 0x8000) != 0);
+	emulator.SetInput(0xB, (GetAsyncKeyState('C') & 0x8000) != 0);
+	emulator.SetInput(0xF, (GetAsyncKeyState('V') & 0x8000) != 0);
 }
 
 int main(int argc, const char *argv[])
@@ -39,7 +39,7 @@ int main(int argc, const char *argv[])
 	MoveWindow(hWnd, r.left, r.top, 1024, 512, true);
 	COORD coord;
 
-#ifdef DICKS
+#if 0
 	if (argc < 2) {
 		std::cout << "Drag a chip8 program file onto the program or onto this window to play it." << std::endl;
 	}

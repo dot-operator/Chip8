@@ -283,9 +283,9 @@ bool Chip8::CheckIPointerIsValid()
 void Chip8::CLS()
 {
 	bDisplayStale = true;
-	for (size_t i = 0; i < 32; ++i) {
-		std::fill(&display[0][i], &display[8][i], 0);
-		std::fill(&arrBDisplayStale[0][i], &arrBDisplayStale[8][i], true);
+	for (size_t y = 0; y < 32; ++y) {
+		std::fill(&display[0][y], &display[63][y], 0);
+		std::fill(&arrBDisplayStale[0][y], &arrBDisplayStale[63][y], true);
 	}
 }
 

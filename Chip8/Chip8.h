@@ -17,7 +17,7 @@ private:
 	float fTimerAccum; // Timer
 	bool bDisplayStale{ true };
 	unsigned char arrBDisplayStale[64][32];
-	unsigned char input; // Keyboard input bitmask. Higher numbers are stored further left.
+	unsigned short input; // Keyboard input bitmask. Higher numbers are stored further left.
 	static const unsigned char glpyhs[80];
 	bool CheckIPointerIsValid(); // Prevent out-of-bounds memory access.
 	std::string opcodehex; // easier debugging
